@@ -1,0 +1,89 @@
+/*
+Selector universal
+*/
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    color: blue;
+    text-align: center;
+    font-size: small;
+}
+
+/* 
+selector de etiqueta: selecciona todos los elementos que contengan la etiqueta HMTL
+ */
+
+p{
+    color: brown;
+    font-size: medium;
+    text-align: center;
+}
+
+h1{
+    color: sandybrown;
+    font-size: x-large;
+}
+
+h2{
+    color: rgb(178, 8, 8);
+    font-size: x-small;
+    text-align: center;
+}
+
+h3{
+    color: rgb(178, 8, 8);
+    /* em: es una unidad relativa de la fuente segun el tamaño actual */
+    font-size: 1.5em;
+    text-align: left;
+}
+
+/*
+selector de clase: selecciona elementos segun atributos de una clase especifica
+*/
+/* para seleccionar los elementos colocamos el caracter (.) seguido del nombre de la clase */
+
+.center{
+    text-align: center;
+    font-size: medium;
+}
+
+/*
+tambien podemos colocar clases a elementos especificos
+*/
+
+p.center{
+    color: red;
+}
+
+.texto-centrado{
+    text-align: center;
+    font-size: medium;
+    color: green;
+}
+
+.texto-rojo{
+    color: red;
+}
+.texto-green{
+    color: green;
+}
+.texto-dorada{
+    color: gold;
+}
+
+.letra_tamano_12{
+    font-size: 12px;
+}
+.letra_tamano_14{
+    font-size: 14px;
+}
+.letra_tamano_16{
+    font-size: 16px;
+}
+/*
+selector de id: para seleccionar un elemento especifico
+*/
+#para1{
+    
+}
