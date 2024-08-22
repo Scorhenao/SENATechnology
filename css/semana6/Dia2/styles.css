@@ -10,6 +10,13 @@ Selector universal
     font-size: small;
 }
 
+body{
+    background-image: url("");/*fondo con una imagen*/
+    background-repeat: no-repeat;/*estilo de repetición del fondo*/
+    background-size: cover;/*estilo de tamaño del fondo*/
+    background-position: center;/*posición del fondo en el centro*/
+}
+
 /* 
 selector de etiqueta: selecciona todos los elementos que contengan la etiqueta HMTL
  */
@@ -23,6 +30,7 @@ p{
 h1{
     color: sandybrown;
     font-size: x-large;
+    background-color: blueviolet;/*color de fondo*/
 }
 
 h2{
@@ -84,6 +92,6 @@ p.center{
 /*
 selector de id: para seleccionar un elemento especifico
 */
-#para1{
+/* #para1{
     
-}
+} */
