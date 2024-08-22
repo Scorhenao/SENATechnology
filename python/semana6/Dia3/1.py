@@ -16,19 +16,25 @@ def menu():
     print("7. Salir")
 
 def validar_opcion(opcion):
-    if opcion == 1:
+    while opcion == "1" :
         ingresar_producto()
-    elif opcion == 2:
+    
+    while opcion == "2":
         vender_producto()
-    elif opcion == 3:
+    
+    while opcion == "3":
         imprimir_productos()
-    elif opcion == 4:
+    
+    while opcion == "4":
         borrar_producto()
-    elif opcion == 5:
+
+    while opcion == "5":
         mostrar_mayores()
-    elif opcion == 6:
+
+    while opcion == "6": 
         mostrar_menores()
-    elif opcion == 7:
+    
+    if opcion == "7":
         exit()
     else:
         print("Opción no válida, por favor elige otra opción.")
@@ -43,6 +49,9 @@ def ingresar_producto():
     cantidades.append(cantidad)
     totales.append(total)
     print("Producto ingresado correctamente!")
+    salir = input("si desea parar ingrese (x): ")
+    if(salir == "x"):
+        menu()
 
 def vender_producto():
     nombre = input("Ingrese el nombre del producto que desea vender: ")
@@ -57,12 +66,16 @@ def vender_producto():
             print("Cantidad insuficiente para vender.")
     else:
         print("Producto no encontrado!")
+    salir = input("si desea parar ingrese (x): ")
+    if(salir == "x"):
+        menu()
 
 def imprimir_productos():
     productos = list(zip(nombres, cantidades, precios, totales))
     productos.sort(key=lambda x: x[3], reverse=True)
     for producto in productos:
         print(f"Producto: {producto[0]}, Cantidad: {producto[1]}, Precio: {producto[2]}, Total: {producto[3]}")
+
 
 def borrar_producto():
     nombre = input("Ingrese el nombre del producto que desea eliminar: ")
@@ -75,6 +88,9 @@ def borrar_producto():
         print("Producto eliminado correctamente!")
     else:
         print("Producto no encontrado!")
+    salir = input("si desea parar ingrese (x): ")
+    if(salir == "x"):
+        menu()
 
 def mostrar_mayores():
     if totales:
@@ -83,6 +99,7 @@ def mostrar_mayores():
         print(f"El producto más caro es: {nombres[index]} con un total de: {max_total}")
     else:
         print("No hay productos en la lista.")
+    
 
 def mostrar_menores():
     if totales:
@@ -95,5 +112,5 @@ def mostrar_menores():
 start = input("Si desea empezar el programa digite (si)\n => ").lower()
 while start == "si":
     menu()
-    opcion = int(input("Ingrese una opción: "))
+    opcion = input("Ingrese una opción: ")
     validar_opcion(opcion)
