@@ -20,26 +20,36 @@ while True:
     else: start = True
 
     while start:
-        opt1 = int(input("1. Comprar producto"))
-        opt2 = int(input("2. Vender producto"))
-        opt3 = int(input("3. Imprimir historial de compras"))
+        opciones = int(input("""
+            1. comprar producto
+            2. vender producto
+            3. imprmir historial de compras
+            =>
+            """))
         #primera opcion
-        while opt1:
+        while  opciones == 1:
             print("<----------Comprar---------->")
             nombreProducto = input("Ingrese el nombre del producto: ")
             precioProducto = float(input("Ingrese el precio del producto: "))
             cantidadProducto = int(input("Ingrese la cantidad del producto: "))
             porcentajeUtilidadProducto = float(input("Ingrese el porcentaje de utilidad del producto: "))
-            productos.append(nombreProducto,precioProducto,cantidadProducto,porcentajeUtilidadProducto) #cargo el producto
             for producto in productos:
-                if producto == nombreProducto:
-                    pass
-            historialDeCompras.append(userName,compras)
+                #Actualizamos la cantidad de producto si el producto ya existe
+                if producto[0] == nombreProducto:
+                    cantidadAnterior = producto[2]
+                    cantidadActual = cantidadProducto
+                    cantidadAnterior += cantidadActual
+                else:
+                    #agreamos el producto a la lista productos
+                    productos.extend(nombreProducto,precioProducto,cantidadProducto,porcentajeUtilidadProducto) #cargo el producto
+                break
+            compras.extend(userName,nombreProducto,cantidadProducto,precioProducto)
+            historialDeCompras.extend(userName,compras)
             salir = input("si desea parar ingrese (x): ")
             if(salir == "x"):
                 break
         #segunda opcion
-        while opt2:
+        while opciones == 2:
             print("<----------Vender---------->")
             nombreProducto = input("Ingrese el nombre del producto: ")
             cantidadProducto = int(input("Ingrese la cantidad del producto: "))
@@ -48,9 +58,9 @@ while True:
                     if producto[2] >= cantidadProducto:
                         saldo += cantidadProducto * producto[1]
                         producto[2] -= cantidadProducto
-                        ventas.append(userName, nombreProducto, producto[1], cantidadProducto)
-                        historialDeCompras.append(userName, [compra[0] for compra in compras if compra[1] == nombreProducto])
-                        saldos.append(userName, saldo)
+                        ventas.extend(userName, nombreProducto, producto[1], cantidadProducto)
+                        historialDeCompras.extend(userName, [compra[0] for compra in compras if compra[1] == nombreProducto])
+                        saldos.extend(userName, saldo)
                         break
                     else:
                         print("No hay suficiente stock para vender este producto")
@@ -58,9 +68,14 @@ while True:
             if(salir == "x"):
                 break
         #tercera opcion
-        while opt3:
-            
-            if(salir == "x"):
+        while opciones == 3:
+            for historial in historialDeCompras:
+                if userName == historial:
+                    historialDeUsuario = []
+                    historialDeUsuario.extend(historial)
+                    print(f"Su historial de compras es:{historialDeUsuario}")
+                    break
+                else: print("Usted no ha comprado ningun producto aun")
                 break
 
     salir = input("Si desea salir ingrese (salir)").lower()
