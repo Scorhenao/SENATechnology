@@ -36,13 +36,24 @@ while True:
             for producto in productos:
                 #Actualizamos la cantidad de producto si el producto ya existe
                 if producto[0] == nombreProducto:
+                    # Si el producto ya existe se le cambia el precio, la cantidad y el porcentaje de utilidad 
                     cantidadAnterior = producto[2]
-                    cantidadActual = cantidadProducto
-                    cantidadAnterior += cantidadActual
+                    cantidadAnterior += cantidadProducto
+                    
+                    porcentajeUtilidadProductoAnterior = producto[3]
+                    porcentajeUtilidadProductoAnterior = porcentajeUtilidadProducto
+                    
+                    precioAnterior = producto[1]
+                    #suma porcentaje de utilizad al precio del producto
+                    precioAnterior = precioProducto * (porcentajeUtilidadProducto / 100)
                 else:
+                    #suma porcentaje de utilizad al precio del producto
+                    porcentajeUtilidadProducto = porcentajeUtilidadProducto
+                    precioProducto = precioProducto * (porcentajeUtilidadProducto / 100)
                     #agreamos el producto a la lista productos
                     productos.extend(nombreProducto,precioProducto,cantidadProducto,porcentajeUtilidadProducto) #cargo el producto
                 break
+            #agregar a compras el el producto digitado y el nombre del usuario
             compras.extend(userName,nombreProducto,cantidadProducto,precioProducto)
             historialDeCompras.extend(userName,compras)
             salir = input("si desea parar ingrese (x): ")
