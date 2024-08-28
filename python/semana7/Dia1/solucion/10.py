@@ -3,93 +3,148 @@
 # Nombre del producto, saldo anterior, precio de compra, porcentaje de utilidad
 # calcular el precio de venta, solictar las compras y las ventas y generar nuevo saldo
 
-usuarios = [] #["nombre"]
-productos = [] # lista de todos los productos estructura ["nombre","precio","cantidad","porcentaje de utilidad"]
-ventas = [] #["nombre de usuario", "nombre de producto", "precio de producto", "cantidad vendida(se resta a la cantidad del producto)"]
-saldos = [] #["nombre de usuario", saldo]
-compras = [] #["nombre de usuario", "nombre de producto", "cantidad (se agrega cantidad al producto)", "precio de producto"]
-historialDeCompras = [] #["nombre de usuario"[compras]]
-listaFinal = [] # [usuarios[productos][ventas][saldos][compras][historialDeCompras]]
+usuarios = []  # ["nombre"]
+productos = []  # lista de todos los productos estructura ["nombre","precio","cantidad","porcentaje de utilidad"]
+ventas = []  # ["nombre de usuario", "nombre de producto", "precio de producto", "cantidad vendida (se resta a la cantidad del producto)"]
+saldos = []  # ["nombre de usuario", saldo]
+compras = []  # ["nombre de usuario", "nombre de producto", "cantidad (se agrega cantidad al producto)", "precio de producto"]
+historialDeCompras = []  # ["nombre de usuario", [compras]]
+historialDeVentas = []  # ["nombre de usuario", [ventas]]
+listaFinal = []  # [usuarios, productos, ventas, saldos, compras, historialDeCompras, historialDeVentas]
 
 while True:
+    print("Bienvenido")
     userName = input("Ingrese su nombre: ")
     saldo = float(input("Ingrese su saldo: "))
     start = False
-    if userName == "" or saldo =="":
+    if userName == "" or saldo == "":
         start = False
-    else: start = True
+    else:
+        start = True
 
     while start:
-        opciones = int(input("""
+        opciones = input("""
             1. comprar producto
             2. vender producto
-            3. imprmir historial de compras
-            =>
-            """))
-        #primera opcion
-        while  opciones == 1:
-            print("<----------Comprar---------->")
-            nombreProducto = input("Ingrese el nombre del producto: ")
-            precioProducto = float(input("Ingrese el precio del producto: "))
-            cantidadProducto = int(input("Ingrese la cantidad del producto: "))
-            porcentajeUtilidadProducto = float(input("Ingrese el porcentaje de utilidad del producto: "))
-            for producto in productos:
-                #Actualizamos la cantidad de producto si el producto ya existe
-                if producto[0] == nombreProducto:
-                    # Si el producto ya existe se le cambia el precio, la cantidad y el porcentaje de utilidad 
-                    cantidadAnterior = producto[2]
-                    cantidadAnterior += cantidadProducto
-                    
-                    porcentajeUtilidadProductoAnterior = producto[3]
-                    porcentajeUtilidadProductoAnterior = porcentajeUtilidadProducto
-                    
-                    precioAnterior = producto[1]
-                    #suma porcentaje de utilizad al precio del producto
-                    precioAnterior = precioProducto * (porcentajeUtilidadProducto / 100)
+            3. imprimir historial de compras
+            4. imprimir historial de ventas
+            x. salir
+            =>""").lower()
+
+        # Primera opción: Comprar producto
+        if opciones == '1':
+            while True:
+                print("<----------Comprar---------->")
+                nombreProducto = input("Ingrese el nombre del producto: ")
+                precioProducto = float(input("Ingrese el precio del producto: "))
+                cantidadProducto = int(input("Ingrese la cantidad del producto: "))
+                porcentajeUtilidadProducto = float(input("Ingrese el porcentaje de utilidad del producto: "))
+
+                productoExistente = False
+                for producto in productos:
+                    if producto[0] == nombreProducto:
+                        # Si el producto ya existe, actualizamos la cantidad y el precio
+                        producto[2] += cantidadProducto
+                        producto[3] = porcentajeUtilidadProducto
+                        producto[1] = precioProducto * (1 + porcentajeUtilidadProducto / 100)
+                        productoExistente = True
+                        break
+
+                if not productoExistente:
+                    # Si el producto no existe, lo agregamos a la lista productos
+                    productos.append([nombreProducto, precioProducto * (1 + porcentajeUtilidadProducto / 100), cantidadProducto, porcentajeUtilidadProducto])
+                
+                # Agregar a compras el producto digitado y el nombre del usuario
+                compras.append([userName, nombreProducto, cantidadProducto, precioProducto])
+                
+                # Actualizar el historial de compras
+                usuarioHistorial = next((item for item in historialDeCompras if item[0] == userName), None)
+                if usuarioHistorial:
+                    # Si ya existe el historial de compras para el usuario, se añade la nueva compra
+                    usuarioHistorial[1].append([userName, nombreProducto, cantidadProducto, precioProducto])
                 else:
-                    #suma porcentaje de utilizad al precio del producto
-                    porcentajeUtilidadProducto = porcentajeUtilidadProducto
-                    precioProducto = precioProducto * (porcentajeUtilidadProducto / 100)
-                    #agreamos el producto a la lista productos
-                    productos.extend(nombreProducto,precioProducto,cantidadProducto,porcentajeUtilidadProducto) #cargo el producto
-                break
-            #agregar a compras el el producto digitado y el nombre del usuario
-            compras.extend(userName,nombreProducto,cantidadProducto,precioProducto)
-            historialDeCompras.extend(userName,compras)
-            salir = input("si desea parar ingrese (x): ")
-            if(salir == "x"):
-                break
-        #segunda opcion
-        while opciones == 2:
-            print("<----------Vender---------->")
-            nombreProducto = input("Ingrese el nombre del producto: ")
-            cantidadProducto = int(input("Ingrese la cantidad del producto: "))
-            for producto in productos:
-                if producto[0] == nombreProducto:
-                    if producto[2] >= cantidadProducto:
-                        saldo += cantidadProducto * producto[1]
-                        producto[2] -= cantidadProducto
-                        ventas.extend(userName, nombreProducto, producto[1], cantidadProducto)
-                        historialDeCompras.extend(userName, [compra[0] for compra in compras if compra[1] == nombreProducto])
-                        saldos.extend(userName, saldo)
-                        break
-                    else:
-                        print("No hay suficiente stock para vender este producto")
-                        break
-            if(salir == "x"):
-                break
-        #tercera opcion
-        while opciones == 3:
-            for historial in historialDeCompras:
-                if userName == historial:
-                    historialDeUsuario = []
-                    historialDeUsuario.extend(historial)
-                    print(f"Su historial de compras es:{historialDeUsuario}")
+                    # Si no existe el historial, se crea uno nuevo para el usuario
+                    historialDeCompras.append([userName, [[userName, nombreProducto, cantidadProducto, precioProducto]]])
+                
+                salir = input("Si desea parar la compra ingrese (x) o presione Enter para continuar: ")
+                if salir.lower() == "x":
                     break
-                else: print("Usted no ha comprado ningun producto aun")
-                break
+
+        # Segunda opción: Vender producto
+        elif opciones == '2':
+            while True:
+                print("<----------Vender---------->")
+                nombreProducto = input("Ingrese el nombre del producto: ")
+                cantidadProducto = int(input("Ingrese la cantidad del producto: "))
+
+                productoEncontrado = False
+                for producto in productos:
+                    if producto[0] == nombreProducto:
+                        if producto[2] >= cantidadProducto:
+                            saldo += cantidadProducto * producto[1]
+                            producto[2] -= cantidadProducto
+                            ventas.append([userName, nombreProducto, producto[1], cantidadProducto])
+                            productoEncontrado = True
+                            break
+                        else:
+                            print("No hay suficiente stock para vender este producto")
+                            productoEncontrado = True
+                            break
+                
+                if not productoEncontrado:
+                    print("El producto no existe.")
+                
+                # Actualizar el historial de ventas
+                usuarioHistorialVentas = next((item for item in historialDeVentas if item[0] == userName), None)
+                if usuarioHistorialVentas:
+                    # Si ya existe el historial de ventas para el usuario, se añade la nueva venta
+                    usuarioHistorialVentas[1].append([userName, nombreProducto, producto[1], cantidadProducto])
+                else:
+                    # Si no existe el historial, se crea uno nuevo para el usuario
+                    historialDeVentas.append([userName, [[userName, nombreProducto, producto[1], cantidadProducto]]])
+
+                salir = input("Si desea parar la venta ingrese (x) o presione Enter para continuar: ")
+                if salir.lower() == "x":
+                    break
+
+        # Tercera opción: Imprimir historial de compras
+        elif opciones == '3':
+            historialDeUsuario = next((item for item in historialDeCompras if item[0] == userName), None)
+            if historialDeUsuario:
+                print(f"Su historial de compras es: {historialDeUsuario[1]}")
+            else:
+                print("Usted no ha comprado ningún producto aún")
+
+        # Cuarta opción: Imprimir historial de ventas
+        elif opciones == '4':
+            historialDeUsuarioVentas = next((item for item in historialDeVentas if item[0] == userName), None)
+            if historialDeUsuarioVentas:
+                print(f"Su historial de ventas es: {historialDeUsuarioVentas[1]}")
+            else:
+                print("Usted no ha vendido ningún producto aún")
+
+        # Salir del menú de opciones
+        elif opciones == 'x':
+            break
+
+        else:
+            print("Opción no válida. Por favor, seleccione una opción del menú.")
+
+    # Agregar usuario y saldo a la lista final
+    if [userName, saldo] not in saldos:
+        saldos.append([userName, saldo])
+
+    # Imprimir la lista final ordenada
+    listaFinal = [usuarios, productos, ventas, saldos, compras, historialDeCompras, historialDeVentas]
+    print("\nLista Final:")
+    print(f"Usuarios: {usuarios}")
+    print(f"Productos: {productos}")
+    print(f"Ventas: {ventas}")
+    print(f"Saldos: {saldos}")
+    print(f"Compras: {compras}")
+    print(f"Historial de Compras: {historialDeCompras}")
+    print(f"Historial de Ventas: {historialDeVentas}")
 
     salir = input("Si desea salir ingrese (salir)").lower()
     if salir == "salir":
         break
-        
