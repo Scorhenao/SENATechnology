@@ -6,7 +6,6 @@
 usuarios = []  # ["nombre"]
 productos = []  # lista de todos los productos estructura ["nombre","precio","cantidad","porcentaje de utilidad"]
 ventas = []  # ["nombre de usuario", "nombre de producto", "precio de producto", "cantidad vendida (se resta a la cantidad del producto)"]
-saldos = []  # ["nombre de usuario", saldo]
 compras = []  # ["nombre de usuario", "nombre de producto", "cantidad (se agrega cantidad al producto)", "precio de producto"]
 historialDeCompras = []  # ["nombre de usuario", [compras]]
 historialDeVentas = []  # ["nombre de usuario", [ventas]]
@@ -15,9 +14,8 @@ listaFinal = []  # [usuarios, productos, ventas, saldos, compras, historialDeCom
 while True:
     print("Bienvenido")
     userName = input("Ingrese su nombre: ")
-    saldo = float(input("Ingrese su saldo: "))
     start = False
-    if userName == "" or saldo == "":
+    if userName == "":
         start = False
     else:
         start = True
@@ -81,9 +79,12 @@ while True:
                 for producto in productos:
                     if producto[0] == nombreProducto:
                         if producto[2] >= cantidadProducto:
-                            saldo += cantidadProducto * producto[1]
+                            # Se calcula el precio total de la venta
+                            totalVenta = cantidadProducto * producto[1]
+                            # Se actualiza la cantidad del producto
                             producto[2] -= cantidadProducto
-                            ventas.append([userName, nombreProducto, producto[1], cantidadProducto])
+                            # Se registra la venta
+                            ventas.append([userName, nombreProducto, producto[1], cantidadProducto, totalVenta])
                             productoEncontrado = True
                             break
                         else:
@@ -98,10 +99,10 @@ while True:
                 usuarioHistorialVentas = next((item for item in historialDeVentas if item[0] == userName), None)
                 if usuarioHistorialVentas:
                     # Si ya existe el historial de ventas para el usuario, se añade la nueva venta
-                    usuarioHistorialVentas[1].append([userName, nombreProducto, producto[1], cantidadProducto])
+                    usuarioHistorialVentas[1].append([userName, nombreProducto, producto[1], cantidadProducto, totalVenta])
                 else:
                     # Si no existe el historial, se crea uno nuevo para el usuario
-                    historialDeVentas.append([userName, [[userName, nombreProducto, producto[1], cantidadProducto]]])
+                    historialDeVentas.append([userName, [[userName, nombreProducto, producto[1], cantidadProducto, totalVenta]]])
 
                 salir = input("Si desea parar la venta ingrese (x) o presione Enter para continuar: ")
                 if salir.lower() == "x":
@@ -119,7 +120,9 @@ while True:
         elif opciones == '4':
             historialDeUsuarioVentas = next((item for item in historialDeVentas if item[0] == userName), None)
             if historialDeUsuarioVentas:
-                print(f"Su historial de ventas es: {historialDeUsuarioVentas[1]}")
+                print(f"Su historial de ventas es: ")
+                for venta in historialDeUsuarioVentas[1]:
+                    print(f"Usuario: {venta[0]}, Producto: {venta[1]}, Precio por unidad: {venta[2]}, Cantidad vendida: {venta[3]}, Total: {venta[4]}")
             else:
                 print("Usted no ha vendido ningún producto aún")
 
@@ -130,17 +133,16 @@ while True:
         else:
             print("Opción no válida. Por favor, seleccione una opción del menú.")
 
-    # Agregar usuario y saldo a la lista final
-    if [userName, saldo] not in saldos:
-        saldos.append([userName, saldo])
+    # Agregar usuario a la lista final
+    if userName not in usuarios:
+        usuarios.append(userName)
 
     # Imprimir la lista final ordenada
-    listaFinal = [usuarios, productos, ventas, saldos, compras, historialDeCompras, historialDeVentas]
+    listaFinal = [usuarios, productos, ventas, compras, historialDeCompras, historialDeVentas]
     print("\nLista Final:")
     print(f"Usuarios: {usuarios}")
     print(f"Productos: {productos}")
     print(f"Ventas: {ventas}")
-    print(f"Saldos: {saldos}")
     print(f"Compras: {compras}")
     print(f"Historial de Compras: {historialDeCompras}")
     print(f"Historial de Ventas: {historialDeVentas}")
