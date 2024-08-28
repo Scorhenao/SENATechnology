@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Practica --bootstrap--</title>
     <!--bootstrap-->
     <!--screen para pantallas de mas de 500px-->
     <link rel="stylesheet" href="./css/bootstrap.min.css" media="screen">
@@ -14,6 +14,55 @@
     <script src="./js/popper.min.js" defer></script>
 </head>
 <body>
+    <h1>Hola a todos</h1>
+    <!-- Contenedor -->
+    <section class="container p-3">
+        <p>Este parrafo va al interior del contenedor</p>
+        <div class="row">
+            <div class="col col-4 bg-primary">Primera columna</div>
+            <div class="col col-4 bg-success">Segunda columna</div>
+            <div class="col col-4 bg-warning">Tercera columna</div>
+        </div> 
+    </section>
+    <!-- Botones -->
+    <h1 class="m-3">Botones</h1>
+    <section class="container d-flex flex-column gap-2">
+        <button class="btn btn-default" type="">Defecto</button>
+        <button class="btn btn-primary" type="">Primario</button>
+        <button class="btn btn-success" type="">Exitoso</button>
+        <button class="btn btn-info" type="">Informacion</button>
+        <button class="btn btn-warning" type="">Advertencia</button>
+        <button class="btn btn-danger" type="">Error</button>
+        <button class="btn btn-link">Link</button>
+        <button class="btn btn-dark">oscuro</button>
+        <button class="btn btn-close"></button>
+        <button class="btn btn-outline-danger">Rojo border</button>
+        <button class="btn btn-outline-dark">Negro border</button>
+    </section>
+
+    <!-- Alertas -->
+    <h1 class="m-3">Alertas</h1>
+    <section class="container d-flex flex-column gap-2">
+        <div class="alert alert-default mt-4" role="alert">Contenido de la alerta - default</div>
+        <div class="alert alert-primary mt-4" role="alert">Contenido de la alerta - primaria</div>
+        <div class="alert alert-secondary mt-4" role="alert">Contenido de la alerta - secundario</div>
+        <div class="alert alert-dark mt-4" role="alert">Contenido de la alerta - dark</div>
+        <div class="alert alert-success" role="alert">Contenido de la alerta - exitosa</div>
+        <div class="alert alert-warning" role="alert">Contenido de la alerta - advertencia</div>
+        <div class="alert alert-danger" role="alert">Contenido de la alerta - error</div>
+        <div class="alert alert-info" role="alert">Contenido de la alerta - información</div> 
+        <div class="alert alert-dismissible" role="alert">Contenido de la alerta - iluminada</div> 
+    </section>
+    
+    <!--Dropdown o selector de menu-->
+    <h1 class="m-3">Dropdown</h1>
+    <section class="container d-flex flex-column gap-2">
+        <button class="btn btn-primary" type="button">Seleccione una opcion</button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink"></div>
+        <div class="dropdown-item" href="#">Opccion 1</div>
+        <div class="dropdown-item" href="#">Opccion 2</div>
+        <div class="dropdown-item" href="#">Opccion 3</div>
+    </section>
 
 </body>
 </html>
