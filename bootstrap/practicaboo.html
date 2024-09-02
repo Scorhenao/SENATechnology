@@ -59,16 +59,74 @@
     <h1 class="m-3">Dropdown</h1>
     <section class="container d-flex flex-column gap-2">
         <div class="dropdown">
+            <!-- <!La norma ARIA, añade sintaxis semantica a los elementos html-->
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown button
+                Seleccione una opcion
             </button>
             <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">opcion 1</a></li>
+            <li><a class="dropdown-item" href="#">opcion 2</a></li>
+            <li><a class="dropdown-item" href="#">opcion 3</a></li>
             </ul>
         </div>
     </section>
     
+    <!-- Modals -->
+    <h1 class="m-3">Modals</h1>
+    <!-- Botón para disparar (trigger) de ventana modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ejemploModal">Ejemplo de modal</button>
+
+    <!-- Contenedor principal que tiene clase modal y otras propiedades de Bootstrap -->
+    <div class="modal" id="ejemploModal" tabindex="-1" aria-labelledby="ejemploModalLabel" aria-hidden="true">
+        <!-- contenedor para centrar el contenido de la pantalla -->
+        <div class="modal-dialog">
+            <!-- contenedor que envuelve el contenido del modal -->
+            <div class="modal-content">
+
+                <!-- cabecera del modal que incluye el título y el botón de cierre -->
+                <div class="modal-header">
+                    <!-- Título del modal con estilo -->
+                    <h1 class="modal-title" id="ejemploModalLabel">Título del modal</h1>
+                    <!-- Botón para cerrar el modal -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+
+                <!-- área donde se coloca el contenido principal del modal -->
+                <div class="modal-body">
+                    <!-- colocar contenido -->
+                    Contenido del modal aquí.
+                </div>
+
+                <!-- sección final del modal -->
+                <div class="modal-footer">
+                    <!-- botón para cerrar el modal -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- cards -->
+    <!-- sirve para agrupar contenido -->
+    <h1 class="m-3">Cards</h1>
+
+    <div class="card" style="width:18rem;">
+        <!-- Imagen en la parte superior de la tarjeta -->
+        <img src="./imgs/pelota.webp" alt="pelota de futbol" class="card-img-top">
+        <!-- cuerpo de la tarjeta que contiene el titul o y el texto -->
+        <div class="card-body">
+            <h4 class="card-title">Titulo de la tarjeta</h4>
+            <p class="card-text">podemos colocar el contenido que queramos en la tarjeta</p>
+        </div>
+        <!-- lista de grupos de la tarjeta, usualmente para detallar elementos -->
+        <ul class="list-group list-group-flush">
+            <!-- elementos de la lista del grupo -->
+            <li class="list-group-item">Un item</li>
+            <li class="list-group-item">Un segundo item</li>
+            <li class="list-group-item">Un tercer item</li>
+        </ul>
+    </div>
+
 </body>
 </html>
